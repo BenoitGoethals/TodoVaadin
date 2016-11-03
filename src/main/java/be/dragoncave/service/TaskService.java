@@ -13,4 +13,6 @@ public interface TaskService {
     Task task(int id);
 
     List<Task> tasks();
+
+    Task save(Task task);
 }

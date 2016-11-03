@@ -1,26 +1,23 @@
 package be.dragoncave;
 
 import be.dragoncave.domain.Country;
-import be.dragoncave.domain.User;
 import be.dragoncave.persistance.CountryRepository;
-
 import be.dragoncave.util.CountryConverter;
 import org.apache.commons.collections.IteratorUtils;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by benoit on 02/11/2016.
@@ -30,6 +27,8 @@ import java.util.List;
 @Transactional
 //@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class CountryRepositoryTets {
+
+    private static final Logger logger = LoggerFactory.getLogger(CountryRepositoryTets.class);
 
     @Autowired
     private CountryRepository countryRepository;
@@ -48,6 +47,7 @@ public class CountryRepositoryTets {
         List<Country> countries2 = IteratorUtils.toList(countryRepository.findAll().iterator());
         assertFalse(countries2.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
         countryRepository.deleteAll();
+        logger.info("test");
 
     }
 }
