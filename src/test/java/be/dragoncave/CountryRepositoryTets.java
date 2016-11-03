@@ -4,6 +4,8 @@ import be.dragoncave.domain.Country;
 import be.dragoncave.domain.User;
 import be.dragoncave.persistance.CountryRepository;
 
+import be.dragoncave.util.CountryConverter;
+import org.apache.commons.collections.IteratorUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by benoit on 02/11/2016.
@@ -28,13 +31,23 @@ public class CountryRepositoryTets {
     @Autowired
     private CountryRepository countryRepository;
 
+    @Autowired
+    private CountryConverter countryConverter;
 
     @Test
     public void saveCountry() {
+        List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
+
+        assertEquals(countries.size(), 250);
 
 
-        Arrays.asList(new Country("Belgie"), new Country("Nederland")).parallelStream().forEach(f -> this.countryRepository.save(f));
-        assertEquals(2, countryRepository.count());
+        assertFalse(countries.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
+
+        countryRepository.save(countries);
+        assertEquals(countryRepository.count(), 250);
+        List<Country> countries2 = IteratorUtils.toList(countryRepository.findAll().iterator());
+
+        assertFalse(countries2.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
 
     }
 }

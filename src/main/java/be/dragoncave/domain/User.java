@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
  * Created by benoit on 02/11/2016.
  */
 @Entity
+
 public class User {
 
     public User(String name, String forName, String userID, String street, String zip, String city, Country country, LocalDateTime birthDate) {
