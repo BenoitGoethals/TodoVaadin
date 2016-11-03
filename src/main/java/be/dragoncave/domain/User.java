@@ -5,6 +5,8 @@ import org.hibernate.annotations.NaturalId;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by benoit on 02/11/2016.
@@ -22,38 +24,54 @@ public class User {
         this.city = city;
         this.country = country;
         this.birthDate = birthDate;
+        tasks = new ArrayList<Task>();
     }
 
 
     public User() {
+
+    }
+
+    @OneToMany(mappedBy = "user", targetEntity = Task.class,
+            fetch = FetchType.EAGER)
+    private List<Task> tasks;
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "USER_ID")
     private int id;
 
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String name;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String forName;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String userID;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String street;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String zip;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String city;
+
     @ManyToOne(optional = false)
     @NaturalId
     private Country country;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private LocalDateTime birthDate;
 

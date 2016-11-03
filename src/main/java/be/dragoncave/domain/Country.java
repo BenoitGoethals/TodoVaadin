@@ -25,8 +25,6 @@ public class Country {
     private int id;
     @Column(unique = true, updatable = false, nullable = false)
     @NotNull
-
-
     private String countryName;
 
     public Country(String countryName) {

@@ -1,6 +1,9 @@
 package be.dragoncave.domain;
 
 
+import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.NaturalId;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -25,6 +28,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "TASK_ID", nullable = false)
     private long id;
     @Column(nullable = false, unique = true)
     private String nbrTask;
@@ -42,6 +46,19 @@ public class Task {
     @Enumerated(EnumType.ORDINAL)
     @Column(unique = true)
     private TaskStatus taskStatus;
+
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID", insertable = true, unique = false)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public long getId() {
         return id;

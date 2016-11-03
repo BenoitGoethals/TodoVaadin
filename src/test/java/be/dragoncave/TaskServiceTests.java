@@ -9,7 +9,9 @@ import be.dragoncave.service.TaskServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -27,6 +29,7 @@ import static org.mockito.Mockito.when;
 @TestPropertySource(properties = { "spring.jmx.enabled:true",
         "spring.datasource.jmx-enabled:true" })*/
 @RunWith(SpringRunner.class)
+
 public class TaskServiceTests {
 
     @MockBean
@@ -34,6 +37,7 @@ public class TaskServiceTests {
 
 
     @Test
+    @Rollback(value = true)
     public void setup() {
 
         LocalDateTime timePoint = LocalDateTime.now();     // The current date and time
