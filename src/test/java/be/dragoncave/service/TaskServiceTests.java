@@ -1,4 +1,4 @@
-package be.dragoncave;
+package be.dragoncave.service;
 
 import be.dragoncave.domain.Task;
 import be.dragoncave.domain.TaskStatus;

@@ -1,4 +1,4 @@
-package be.dragoncave;
+package be.dragoncave.persistance;
 
 import be.dragoncave.domain.*;
 import be.dragoncave.persistance.CountryRepository;
