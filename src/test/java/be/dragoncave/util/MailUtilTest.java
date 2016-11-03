@@ -28,7 +28,7 @@ public class MailUtilTest {
     @Before
     public void setup(){
          wiser = new Wiser();
-        wiser.setPort(25);
+        wiser.setPort(1026);
         wiser.setHostname("localhost");
         wiser.start();
     }
