@@ -4,6 +4,8 @@ import be.dragoncave.domain.*;
 import be.dragoncave.persistance.CountryRepository;
 import be.dragoncave.persistance.TaskReprository;
 import be.dragoncave.persistance.UserRepository;
+import be.dragoncave.util.CountryConverter;
+import org.apache.commons.collections.IteratorUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -41,6 +44,10 @@ public class TaskReprositoryTests {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CountryConverter countryConverter;
+
+
     @Test
     @Rollback(value = true)
     public void saveTask() throws Exception {
@@ -48,10 +55,14 @@ public class TaskReprositoryTests {
         LocalDateTime timePoint = LocalDateTime.now();     // The current date and time
 
         LocalDateTime endDate = LocalDateTime.now().plusMonths(2);
-        Arrays.asList(new Country("Belgie"), new Country("Nederland")).parallelStream().forEach(f -> this.countryRepository.save(f));
-        Country country = countryRepository.findOne(1);
-        assertNotNull(country);
-        User persUser = new User("xwcwx", "sdd", "dqd", "dsqd", "9899", "dfsdf", country, endDate);
+        List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
+        assertEquals(countries.size(), 250);
+        assertFalse(countries.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
+        countryRepository.save(countries);
+        assertEquals(countryRepository.count(), 250);
+        List<Country> countries2 = IteratorUtils.toList(countryRepository.findAll().iterator());
+        assertFalse(countries2.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
+        User persUser = new User("xwcwx", "sdd", "dqd", "dsqd", "9899", "dfsdf", countries2.get(1), endDate);
         this.userRepository.save(persUser);
         User user = userRepository.findAll().iterator().next();
         assertEquals(1, userRepository.count());
@@ -61,12 +72,15 @@ public class TaskReprositoryTests {
         User userRet = userRepository.findByUserID("dqd");
         assertNotNull(userRet);
         taskPers.setUser(userRet);
-        this.taskReprository.save(taskPers);
-        Task task = taskReprository.findAll().iterator().next();
+        Task task = this.taskReprository.save(taskPers);
+        //Task task = taskReprository.findAll().iterator().next();
         assertThat(task.getDescription()).isEqualTo("ffsdf");
-
+        assertEquals(task.getId(), 1);
 
         User userSave = userRepository.findOne(1);
         assertEquals(userSave.getTasks().size(), 1);
+        taskReprository.deleteAll();
+        userRepository.deleteAll();
+        countryRepository.deleteAll();
     }
 }

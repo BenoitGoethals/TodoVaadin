@@ -47,6 +47,7 @@ public class CountryRepositoryTets {
         assertEquals(countryRepository.count(), 250);
         List<Country> countries2 = IteratorUtils.toList(countryRepository.findAll().iterator());
         assertFalse(countries2.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
+        countryRepository.deleteAll();
 
     }
 }

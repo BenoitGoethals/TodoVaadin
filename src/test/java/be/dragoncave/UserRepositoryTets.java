@@ -3,6 +3,8 @@ package be.dragoncave;
 import be.dragoncave.domain.*;
 import be.dragoncave.persistance.CountryRepository;
 import be.dragoncave.persistance.UserRepository;
+import be.dragoncave.util.CountryConverter;
+import org.apache.commons.collections.IteratorUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -24,13 +27,15 @@ import static org.junit.Assert.assertNotNull;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@Transactional
+@Transactional
 //@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class UserRepositoryTets {
 
     @Autowired
     private CountryRepository countryRepository;
 
+    @Autowired
+    private CountryConverter countryConverter;
 
     @Autowired
     private UserRepository userRepository;
@@ -40,11 +45,18 @@ public class UserRepositoryTets {
     public void saveTask() throws Exception {
 
         LocalDateTime birthDate = LocalDateTime.now().plusMonths(2);
-        Arrays.asList(new Country("Belgie"), new Country("Nederland")).parallelStream().forEach(f -> this.countryRepository.save(f));
-        User persUser = new User("xwcwx", "sdd", "dqd", "dsqd", "9899", "dfsdf", countryRepository.findOne(1), birthDate);
+        List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
+        assertEquals(countries.size(), 250);
+        assertFalse(countries.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
+        countryRepository.save(countries);
+        assertEquals(countryRepository.count(), 250);
+        List<Country> countries2 = IteratorUtils.toList(countryRepository.findAll().iterator());
+        assertFalse(countries2.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
+        User persUser = new User("xwcwx", "sdd", "dqd", "dsqd", "9899", "dfsdf", countries2.get(1), birthDate);
         this.userRepository.save(persUser);
         User user = userRepository.findAll().iterator().next();
         assertEquals(1, userRepository.count());
         assertNotNull(userRepository.findByUserID("dqd").getCountry());
+        countryRepository.deleteAll();
     }
 }
