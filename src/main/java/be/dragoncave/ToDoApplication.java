@@ -1,7 +1,6 @@
 package be.dragoncave;
 
-import be.dragoncave.domain.Country;
-import be.dragoncave.domain.User;
+import be.dragoncave.domain.*;
 import be.dragoncave.persistance.CountryRepository;
 import be.dragoncave.persistance.UserRepository;
 import be.dragoncave.service.TaskService;
@@ -11,12 +10,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootApplication
-public class ToDoApplication {
+//@ComponentScan()
+public class ToDoApplication  {
 
     public static void main(String[] args) {
         SpringApplication.run(ToDoApplication.class, args);
@@ -24,6 +25,7 @@ public class ToDoApplication {
 
 
 
+/*
     @Bean
     public CommandLineRunner loadData(TaskService taskService, UserService userService, CountryRepository countryRepository, CountryConverter countryConverter){
 
@@ -34,12 +36,20 @@ public class ToDoApplication {
             countryRepository.save(countries);
 
             for(int i=1;i==200;i++){
-                User persUser = new User("xwcwx", "sdd", "dqd", "dsqd", "9899", "dfsdf", countryRepository.findOne(1), LocalDateTime.now().minusYears(50));
+                User persUser = new User("xwcwx"+i, "sdd"+i, "dqd"+i, "dsqd"+i, "9899", "dfsdf", countryRepository.findOne(i), LocalDateTime.now().minusYears(50));
                 userService.save(persUser);
+                Task taskPers = new Task("ffsdf"+i, LocalDateTime.now().plusMonths(i), LocalDateTime.now().plusMonths(i).plusDays(20), TaskType.PRIVATE, TaskStatus.RUNNING);
+                taskPers.setUser(persUser);
+                taskService.save(taskPers);
+                System.out.print(taskPers.getId());
+
             }
 
 
-        };
-    }
 
+
+        };
+
+    }
+*/
 }

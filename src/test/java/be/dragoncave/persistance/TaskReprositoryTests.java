@@ -51,7 +51,7 @@ public class TaskReprositoryTests {
     @Test
     @Rollback(value = true)
     public void saveTask() throws Exception {
-
+        countryRepository.deleteAll();
         LocalDateTime timePoint = LocalDateTime.now();     // The current date and time
 
         LocalDateTime endDate = LocalDateTime.now().plusMonths(2);

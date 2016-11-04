@@ -49,29 +49,29 @@ public class User {
     @Column(name = "USER_ID")
     private int id;
 
-    @Column(unique = true, updatable = true, nullable = false)
+    @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String name;
-    @Column(unique = true, updatable = true, nullable = false)
+    @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String forName;
-    @Column(unique = true, updatable = true, nullable = false)
+    @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String userID;
     @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String street;
-    @Column(unique = true, updatable = true, nullable = false)
+    @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String zip;
-    @Column(unique = true, updatable = true, nullable = false)
+    @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String city;
 
     @ManyToOne(optional = false)
-    @NaturalId
+
     private Country country;
-    @Column(unique = true, updatable = true, nullable = false)
+    @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private LocalDateTime birthDate;
 

@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MailUtilTest {
+public class MailUtilImplTest {
 
     @Autowired
     private MailUtil mailUtil;

@@ -43,7 +43,7 @@ public class UserRepositoryTets {
     @Test
     @Rollback(value = true)
     public void saveTask() throws Exception {
-
+        countryRepository.deleteAll();
         LocalDateTime birthDate = LocalDateTime.now().plusMonths(2);
         List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
         assertEquals(countries.size(), 250);
@@ -58,5 +58,6 @@ public class UserRepositoryTets {
         assertEquals(1, userRepository.count());
         assertNotNull(userRepository.findByUserID("dqd").getCountry());
         countryRepository.deleteAll();
+
     }
 }

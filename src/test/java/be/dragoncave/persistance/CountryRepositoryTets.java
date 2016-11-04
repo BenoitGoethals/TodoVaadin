@@ -39,6 +39,7 @@ public class CountryRepositoryTets {
     @Test
     @Rollback(value = true)
     public void saveCountry() {
+        countryRepository.deleteAll();
         List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
         assertEquals(countries.size(), 250);
         assertFalse(countries.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));

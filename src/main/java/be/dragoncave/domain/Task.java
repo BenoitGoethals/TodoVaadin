@@ -41,10 +41,10 @@ public class Task {
     //@Temporal(TemporalType.DATE)
     private LocalDateTime endDate;
     @Enumerated(EnumType.ORDINAL)
-    @Column(unique = true)
+    @Column(unique = false)
     private TaskType taskType;
     @Enumerated(EnumType.ORDINAL)
-    @Column(unique = true)
+    @Column(unique = false)
     private TaskStatus taskStatus;
 
 

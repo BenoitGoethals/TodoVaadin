@@ -1,39 +1,12 @@
 package be.dragoncave.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
 
 /**
- * Created by benoi on 3/11/2016.
+ * Created by benoit on 04/11/2016.
  */
+public interface MailUtil {
+    SimpleMailMessage send(String dest, String subject, String body);
 
-@Component
-public class MailUtil {
-
-    private final JavaMailSender javaMailSender;
-
-    @Autowired
-    MailUtil(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
-
-
-   public SimpleMailMessage send(String dest,String subject,String body) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(dest);
-        mailMessage.setReplyTo("someone@localhost");
-        mailMessage.setFrom("someone@localhost");
-        mailMessage.setSubject(subject);
-        mailMessage.setText(body);
-        javaMailSender.send(mailMessage);
-        return mailMessage;
-    }
-
-    public SimpleMailMessage send(SimpleMailMessage mailMessage) {
-
-        javaMailSender.send(mailMessage);
-        return mailMessage;
-    }
+    SimpleMailMessage send(SimpleMailMessage mailMessage);
 }
