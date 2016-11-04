@@ -1,7 +1,5 @@
 package be.dragoncave.domain;
 
-import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -55,10 +53,10 @@ public class User {
     @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String forName;
-    @Column(unique = false, updatable = true, nullable = false)
+    @Column(unique = true, updatable = true, nullable = false)
     @NotNull
     private String userID;
-    @Column(unique = true, updatable = true, nullable = false)
+    @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String street;
     @Column(unique = false, updatable = true, nullable = false)

@@ -3,67 +3,17 @@
   <component name="issues">
     <option name="index">
       <map>
-        <entry key="$MAVEN_REPOSITORY$/org/subethamail/subethasmtp/3.1.7/subethasmtp-3.1.7.jar!/org/subethamail/wiser/Wiser.class">
+        <entry key="/fragment.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/pom.xml">
+        <entry key="$PROJECT_DIR$/src/main/java/be/dragoncave/domain/User.java">
           <value>
             <set />
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/be/dragoncave/persistance/UserRepository.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/be/dragoncave/service/TaskService.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/be/dragoncave/service/TaskServiceImpl.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/be/dragoncave/service/UserServiceImpl.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/be/dragoncave/util/MailConfiguration.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/java/be/dragoncave/util/MailUtil.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/main/resources/logback.xml">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/be/dragoncave/CountryRepositoryTets.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/java/be/dragoncave/util/MailUtilTest.java">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/resources/application.properties">
-          <value>
-            <set />
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/src/test/resources/logback.xml">
+        <entry key="$PROJECT_DIR$/src/test/java/be/dragoncave/util/BukTest.java">
           <value>
             <set />
           </value>

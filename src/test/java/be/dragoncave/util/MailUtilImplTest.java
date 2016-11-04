@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.subethamail.wiser.Wiser;
 
@@ -36,6 +37,21 @@ public class MailUtilImplTest {
     @Test
     public void send() throws Exception {
         mailUtil.send("benoit.goethals","Here is a sample subject !","sdfsfsd");
+        assertThat(wiser.getMessages()).hasSize(1);
+        MimeMessage message = wiser.getMessages().iterator().next().getMimeMessage();
+        assertThat(message.getSubject()).isEqualTo("Here is a sample subject !");
+    }
+
+
+    @Test
+    public void sendsimpleMailMessage() throws Exception {
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo("fdfds@benoit.be");
+        mailMessage.setReplyTo("someone@localhost");
+        mailMessage.setFrom("someone@localhost");
+        mailMessage.setSubject("Here is a sample subject !");
+        mailMessage.setText("dsfdsf");
+        mailUtil.send(mailMessage);
         assertThat(wiser.getMessages()).hasSize(1);
         MimeMessage message = wiser.getMessages().iterator().next().getMimeMessage();
         assertThat(message.getSubject()).isEqualTo("Here is a sample subject !");
