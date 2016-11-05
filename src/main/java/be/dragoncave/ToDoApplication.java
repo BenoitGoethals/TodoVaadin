@@ -58,23 +58,6 @@ public class ToDoApplication implements CommandLineRunner {
     }
 
 
-    private void load() {
-
-        List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
-
-        countryRepository.save(countries);
-        System.out.println(countryRepository.count());
-        for (int i = 1; i <= 200; i++) {
-            User persUser = new User("xwcwx" + i, "sdd" + i, "dqd" + i, "dsqd" + i, "9899", "dfsdf", countryRepository.findOne(i), LocalDateTime.now().minusYears(50));
-            userService.save(persUser);
-            Task taskPers = new Task("ffsdf" + i, LocalDateTime.now().plusMonths(i), LocalDateTime.now().plusMonths(i).plusDays(20), TaskType.PRIVATE, TaskStatus.RUNNING);
-            taskPers.setUser(persUser);
-            taskService.save(taskPers);
-            System.out.print(taskPers.getId());
-
-        }
-    }
-
     @Override
     public void run(String... args) throws Exception {
        // load();

@@ -6,16 +6,21 @@ import be.dragoncave.service.TaskService;
 import be.dragoncave.service.UserService;
 import be.dragoncave.util.CountryConverter;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.converter.ConverterUtil;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.*;
+import com.vaadin.ui.Calendar;
+import com.vaadin.ui.components.calendar.event.BasicEvent;
+import com.vaadin.ui.renderers.DateRenderer;
+import com.vaadin.ui.renderers.Renderer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.convert.JodaTimeConverters;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by benoit on 03/11/2016.
@@ -59,15 +64,19 @@ public class MainPanel extends UI {
         layout.addComponent(grid);
         grid.setSizeFull();
         layout.setExpandRatio(grid, 1);
-        grid.setColumns("description", "startDate", "endDate",
+        grid.setColumns("description",  "endDate", "startDate",
                 "taskType", "taskStatus", "user.name","user.forName","user.userID");
-
+      //  grid.addColumn("startDate", LocalDate.class);
        // grid.getColumn("busy")
          //       .setConverter(new BooleanTrafficLight())
            //     .setRenderer(new HtmlRenderer());
+        //grid.getColumn("endDate").setConverter(new LocalDateToStringConverter());
 
-
-
+       grid.getColumn("startDate").setConverter(new LocalDateToStringConverter());
+        grid.getColumn("endDate").setConverter(new LocalDateToStringConverter());
+      //  bornColumn.setRenderer(new DateRenderer("%1$tB %1$te, %1$tY",
+        //        Locale.ENGLISH));
+       // bornColumn.setConverter(new  );
 
        // tasks.forEach(f->grid.addRow(f.getDescription()));
         ComboBox comboBox=new ComboBox("select one");
@@ -88,16 +97,43 @@ public class MainPanel extends UI {
         verticalLayout.addComponent(grid);
 
 
+
+        Calendar calendar=new Calendar();
+      //  calendar.setWidth("800px");
+
+        calendar.setSizeFull();
+
+      calendar.setStartDate(new GregorianCalendar(2016, 11, 16, 13, 00, 00).getTime());
+        calendar.setEndDate(new GregorianCalendar(2016, 12, 16, 13, 00, 00).getTime());
+
+
+        GregorianCalendar start = new GregorianCalendar();
+        GregorianCalendar end   = new GregorianCalendar();
+        end.add(java.util.Calendar.HOUR, 2);
+        calendar.addEvent(new BasicEvent("Calendar study",
+                "Learning how to use Vaadin Calendar",
+                start.getTime(), end.getTime()));
+
+
+
+        taskService.tasks().forEach(t->{
+
+            calendar.addEvent(new BasicEvent("Calendar study",
+                    "Learning how to use Vaadin Calendar",
+                    DateUtils.asDate( t.getStartDate()), DateUtils.asDate(t.getEndDate().toLocalDate())));
+
+        });
+
+        verticalLayout.addComponent(calendar);
+
         // create generated column and specify our "generator/formatter"
       //  table.addGeneratedColumn("rules", new RuleGenerator());
 
 
 
-
-
-
         setContent(layout);
     }
+
 
 
 
