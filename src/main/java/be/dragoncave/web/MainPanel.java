@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class MainPanel extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        load();
+       // load();
         List<Task> tasks=taskService.tasks();
         List<Country> countries= (List<Country>) countryRepository.findAll();
         System.out.println(tasks.size());
@@ -52,14 +53,14 @@ public class MainPanel extends UI {
 
 
         BeanItemContainer<Task> dataSource = new BeanItemContainer<Task>(Task.class,taskService.tasks());
-      //  dataSource.addNestedContainerBean("user");
+       dataSource.addNestedContainerBean("user");
       //  dataSource.addNestedContainerBean("country");
         Grid grid = new Grid("My data grid",dataSource);
         layout.addComponent(grid);
         grid.setSizeFull();
         layout.setExpandRatio(grid, 1);
-        grid.setColumnOrder("description", "startDate", "endDate",
-                "taskType", "taskStatus", "user");
+        grid.setColumns("description", "startDate", "endDate",
+                "taskType", "taskStatus", "user.name","user.forName","user.userID");
 
        // grid.getColumn("busy")
          //       .setConverter(new BooleanTrafficLight())
