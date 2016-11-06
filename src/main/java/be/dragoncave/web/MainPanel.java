@@ -5,6 +5,7 @@ import be.dragoncave.persistance.CountryRepository;
 import be.dragoncave.service.TaskService;
 import be.dragoncave.service.UserService;
 import be.dragoncave.util.CountryConverter;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.converter.ConverterUtil;
 import com.vaadin.server.VaadinRequest;
@@ -44,36 +45,79 @@ public class MainPanel extends UI {
         this.taskService = taskService;
     }
 
+    private Task task=new Task();
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
        // load();
-        List<Task> tasks=taskService.tasks();
-        List<Country> countries= (List<Country>) countryRepository.findAll();
-        System.out.println(tasks.size());
         HorizontalLayout layout=new HorizontalLayout();
-
-        layout.setSizeFull();
-        VerticalLayout verticalLayout=new VerticalLayout();
-        layout.addComponent(verticalLayout);
-
-
         BeanItemContainer<Task> dataSource = new BeanItemContainer<Task>(Task.class,taskService.tasks());
-       dataSource.addNestedContainerBean("user");
-      //  dataSource.addNestedContainerBean("country");
+        dataSource.addNestedContainerBean("user");
         Grid grid = new Grid("My data grid",dataSource);
         layout.addComponent(grid);
         grid.setSizeFull();
         layout.setExpandRatio(grid, 1);
         grid.setColumns("description",  "endDate", "startDate",
                 "taskType", "taskStatus", "user.name","user.forName","user.userID");
-      //  grid.addColumn("startDate", LocalDate.class);
-       // grid.getColumn("busy")
-         //       .setConverter(new BooleanTrafficLight())
-           //     .setRenderer(new HtmlRenderer());
+        //  grid.addColumn("startDate", LocalDate.class);
+        // grid.getColumn("busy")
+        //       .setConverter(new BooleanTrafficLight())
+        //     .setRenderer(new HtmlRenderer());
         //grid.getColumn("endDate").setConverter(new LocalDateToStringConverter());
 
-       grid.getColumn("startDate").setConverter(new LocalDateToStringConverter());
+        grid.getColumn("startDate").setConverter(new LocalDateToStringConverter());
         grid.getColumn("endDate").setConverter(new LocalDateToStringConverter());
+        //  dataSource.addNestedContainerBean("country");
+
+
+        Panel panel=new Panel();
+        panel.setSizeFull();
+        HorizontalLayout horizontalLayout=new HorizontalLayout();
+        VerticalLayout verticalLayout=new VerticalLayout();
+        Button addButton=new Button("Add Task");
+        horizontalLayout.addComponent(addButton);
+
+        addButton.addClickListener(new Button.ClickListener() {
+            public void buttonClick(Button.ClickEvent event) {
+
+                TaskForm sub = new TaskForm(task);
+
+                // Add it to the root component
+                UI.getCurrent().addWindow(sub);
+            }
+        });
+
+        Button deleteButton=new Button("Delete Task");
+        horizontalLayout.addComponent(deleteButton);
+        deleteButton.addClickListener(new Button.ClickListener() {
+            public void buttonClick(Button.ClickEvent event) {
+
+                if(grid.getSelectedRow()!=null){
+                    Object selected = ((Grid.SingleSelectionModel) grid.getSelectionModel()).getSelectedRow();
+                    Item item = grid.getContainerDataSource().getItem(selected);
+                    grid.getContainerDataSource().removeItem(item);
+                    grid.clearSortOrder();
+
+                }
+            }
+        });
+
+        Button editButton=new Button("Edit Button");
+        horizontalLayout.addComponent(editButton);
+
+
+        verticalLayout.addComponent(horizontalLayout);
+        List<Task> tasks=taskService.tasks();
+        List<Country> countries= (List<Country>) countryRepository.findAll();
+        System.out.println(tasks.size());
+
+
+        layout.setSizeFull();
+
+        layout.addComponent(verticalLayout);
+
+
+
       //  bornColumn.setRenderer(new DateRenderer("%1$tB %1$te, %1$tY",
         //        Locale.ENGLISH));
        // bornColumn.setConverter(new  );
