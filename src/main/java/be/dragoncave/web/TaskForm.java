@@ -4,6 +4,7 @@ import be.dragoncave.domain.Task;
 import be.dragoncave.domain.TaskStatus;
 import be.dragoncave.domain.TaskType;
 import be.dragoncave.domain.User;
+import be.dragoncave.service.TaskService;
 import be.dragoncave.service.UserService;
 import be.dragoncave.util.AppConfiguration;
 import com.vaadin.data.util.BeanItemContainer;
@@ -28,9 +29,9 @@ import javax.swing.*;
 public class TaskForm  extends Window {
 
 
+private Grid grid;
 
-
-    public TaskForm(Task task) {
+    public TaskForm(Grid grid) {
         super("Subs on Sale"); // Set window caption
         center();
         FormLayout form = new FormLayout();
@@ -43,7 +44,7 @@ public class TaskForm  extends Window {
         tf1.setRequired(true);
         tf1.addValidator(new NullValidator("Must be given", false));
         form.addComponent(tf1);
-
+        this.grid=grid;
 
         ComboBox comboboxStatus = new ComboBox("Task Status");
         comboboxStatus.setNullSelectionAllowed(false);
@@ -108,9 +109,23 @@ public class TaskForm  extends Window {
         Button ok = new Button("OK");
         ok.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                close(); // Close the sub-window
+               Task task=new Task();
+                task.setStartDate(DateUtils.asLocalDateTime(dateFieldSt.getValue()));
+                task.setUser((User) comboboxUsers.getValue());
+                task.setDescription(tf1.getValue());
+                task.setEndDate(DateUtils.asLocalDateTime(dateFieldEnd.getValue()));
+                task.setTaskStatus((TaskStatus) comboboxStatus.getValue());
+                task.setTaskType((TaskType) comboboxTypes.getValue());
+                task.setNbrTask();
+                AppConfiguration.getApplicationContext().getBean(TaskService.class).save(task);
+                ((BeanItemContainer<Task>)grid.getContainerDataSource()).addBean(task);
+                grid.markAsDirty();
+
+                close();
             }
         });
         form.addComponent(ok);
     }
+
+
 }

@@ -86,7 +86,7 @@ public class MainPanel extends UI {
         addButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
 
-                TaskForm sub = new TaskForm(task);
+                TaskForm sub = new TaskForm(grid);
 
                 // Add it to the root component
                 UI.getCurrent().addWindow(sub);

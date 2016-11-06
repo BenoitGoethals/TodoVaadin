@@ -76,6 +76,9 @@ public class Task {
         this.nbrTask = nbrTask;
     }
 
+    public void setNbrTask() {
+        this.nbrTask = String.valueOf(startDate.hashCode() + endDate.hashCode());
+    }
     public String getDescription() {
         return description;
     }
