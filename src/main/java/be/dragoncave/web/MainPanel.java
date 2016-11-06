@@ -108,7 +108,6 @@ public class MainPanel extends UI {
                     deleteButton.setEnabled(false);
                     grid.clearSortOrder();
                     grid.markAsDirty();
-
                 }
             }
         });
@@ -118,7 +117,6 @@ public class MainPanel extends UI {
             public void select(SelectionEvent event) {
                 // Notification.show("Select row: "+grid.getSelectedRow());
                 deleteButton.setEnabled(true);
-
             }
         });
 
