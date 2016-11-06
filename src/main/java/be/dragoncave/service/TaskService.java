@@ -15,4 +15,6 @@ public interface TaskService {
     List<Task> tasks();
 
     Task save(Task task);
+
+    void delete(Task selected);
 }

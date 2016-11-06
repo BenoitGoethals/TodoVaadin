@@ -6,6 +6,7 @@ import be.dragoncave.service.TaskService;
 import be.dragoncave.service.UserService;
 import be.dragoncave.util.CountryConverter;
 import com.vaadin.data.Item;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.converter.ConverterUtil;
 import com.vaadin.event.ItemClickEvent;
@@ -98,18 +99,21 @@ public class MainPanel extends UI {
         deleteButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
 
-                if(grid.getSelectedRow()!=null){
+                if(grid.getSelectedRow()!=null) {
                     Task selected = (Task) ((Grid.SingleSelectionModel) grid.getSelectionModel()).getSelectedRow();
-                    System.out.println(selected.getClass());
-                    Item item = grid.getContainerDataSource().getItem(selected);
+                    taskService.delete(selected);
 
-                    dataSource.removeItem(grid.getSelectedRow());
-                    boolean ok=dataSource.removeItem(grid.getSelectedRow());
-                    deleteButton.setEnabled(false);
-                    grid.clearSortOrder();
-                    grid.markAsDirty();
+                        System.out.println(selected.getClass());
+                        Item item = grid.getContainerDataSource().getItem(selected);
+
+                        dataSource.removeItem(grid.getSelectedRow());
+                        boolean ok = dataSource.removeItem(grid.getSelectedRow());
+                        deleteButton.setEnabled(false);
+                        grid.clearSortOrder();
+                        grid.markAsDirty();
+                    }
                 }
-            }
+
         });
         grid.addSelectionListener(new SelectionEvent.SelectionListener() {
 
@@ -127,7 +131,12 @@ public class MainPanel extends UI {
                 if (event.isDoubleClick()) {
                     Object itemId = event.getItemId();
                     grid.setDetailsVisible(itemId, !grid.isDetailsVisible(itemId));
-                     Notification.show("Select row: "+grid.getSelectedRow());
+
+                   // Task selected = (Task) ((Grid.SingleSelectionModel) grid.getSelectionModel()).getSelectedRow();
+
+                    BeanItem<Task> item = dataSource.getItem(event.getItemId());
+                    Task task=item.getBean();
+                    Notification.show("Nr : "+task.getNbrTask()+System.lineSeparator() +"Description : "+task.getDescription()+System.lineSeparator() +" Start :"+task.getStartDate()+System.lineSeparator() +"End : "+task.getEndDate()+System.lineSeparator() +" User : "+task.getUser().getForName()+"  "+task.getUser().getName());
                 }
             }
         });
