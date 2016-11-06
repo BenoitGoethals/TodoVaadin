@@ -97,6 +97,7 @@ public class MainPanel extends UI {
                     Item item = grid.getContainerDataSource().getItem(selected);
                     grid.getContainerDataSource().removeItem(item);
                     grid.clearSortOrder();
+                    grid.markAsDirty();
 
                 }
             }
