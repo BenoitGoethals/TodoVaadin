@@ -8,6 +8,8 @@ import be.dragoncave.util.CountryConverter;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.converter.ConverterUtil;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.SelectionEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.shared.ui.combobox.FilteringMode;
 import com.vaadin.spring.annotation.SpringUI;
@@ -54,6 +56,7 @@ public class MainPanel extends UI {
         BeanItemContainer<Task> dataSource = new BeanItemContainer<Task>(Task.class,taskService.tasks());
         dataSource.addNestedContainerBean("user");
         Grid grid = new Grid("My data grid",dataSource);
+        grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         layout.addComponent(grid);
         grid.setSizeFull();
         layout.setExpandRatio(grid, 1);
@@ -68,6 +71,8 @@ public class MainPanel extends UI {
         grid.getColumn("startDate").setConverter(new LocalDateToStringConverter());
         grid.getColumn("endDate").setConverter(new LocalDateToStringConverter());
         //  dataSource.addNestedContainerBean("country");
+
+
 
 
         Panel panel=new Panel();
@@ -88,21 +93,46 @@ public class MainPanel extends UI {
         });
 
         Button deleteButton=new Button("Delete Task");
+        deleteButton.setEnabled(false);
         horizontalLayout.addComponent(deleteButton);
         deleteButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
 
                 if(grid.getSelectedRow()!=null){
-                    Object selected = ((Grid.SingleSelectionModel) grid.getSelectionModel()).getSelectedRow();
+                    Task selected = (Task) ((Grid.SingleSelectionModel) grid.getSelectionModel()).getSelectedRow();
+                    System.out.println(selected.getClass());
                     Item item = grid.getContainerDataSource().getItem(selected);
-                    grid.getContainerDataSource().removeItem(item);
+
+                    dataSource.removeItem(grid.getSelectedRow());
+                    boolean ok=dataSource.removeItem(grid.getSelectedRow());
+                    deleteButton.setEnabled(false);
                     grid.clearSortOrder();
                     grid.markAsDirty();
 
                 }
             }
         });
+        grid.addSelectionListener(new SelectionEvent.SelectionListener() {
 
+            @Override
+            public void select(SelectionEvent event) {
+                // Notification.show("Select row: "+grid.getSelectedRow());
+                deleteButton.setEnabled(true);
+
+            }
+        });
+
+
+        grid.addItemClickListener(new ItemClickEvent.ItemClickListener() {
+            @Override
+            public void itemClick(ItemClickEvent event) {
+                if (event.isDoubleClick()) {
+                    Object itemId = event.getItemId();
+                    grid.setDetailsVisible(itemId, !grid.isDetailsVisible(itemId));
+                     Notification.show("Select row: "+grid.getSelectedRow());
+                }
+            }
+        });
         Button editButton=new Button("Edit Button");
         horizontalLayout.addComponent(editButton);
 
