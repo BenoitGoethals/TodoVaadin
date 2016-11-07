@@ -23,7 +23,7 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = false, updatable = false, nullable = false)
     @NotNull
     private String countryName;
 

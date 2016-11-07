@@ -12,12 +12,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@SpringBootApplication
-//@ComponentScan()
+@SpringBootApplication()
+//@Profile("prod")
 public class ToDoApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
@@ -38,7 +40,7 @@ public class ToDoApplication implements CommandLineRunner {
     private CountryRepository countryRepository;
 
 
-    @Bean
+    @Bean()
     public CommandLineRunner loadData() {
         List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
 

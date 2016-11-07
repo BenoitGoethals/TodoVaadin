@@ -1,23 +1,25 @@
 package be.dragoncave.persistance;
 
+import be.dragoncave.SpecificTestConfig;
+import be.dragoncave.ToDoApplication;
 import be.dragoncave.domain.*;
-import be.dragoncave.persistance.CountryRepository;
-import be.dragoncave.persistance.TaskReprository;
-import be.dragoncave.persistance.UserRepository;
 import be.dragoncave.util.CountryConverter;
 import org.apache.commons.collections.IteratorUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,9 +30,11 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by benoit on 01/11/2016.
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-//@Transactional(propagation = Propagation.NOT_SUPPORTED)
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes =SpecificTestConfig.class)
+
+@ActiveProfiles({"test-profile"})
 //@Transactional( propagation = Propagation.REQUIRED)
 public class TaskReprositoryTests {
 
@@ -51,15 +55,15 @@ public class TaskReprositoryTests {
     @Test
     @Rollback(value = true)
     public void saveTask() throws Exception {
-        countryRepository.deleteAll();
+       countryRepository.deleteAll();
         LocalDateTime timePoint = LocalDateTime.now();     // The current date and time
 
         LocalDateTime endDate = LocalDateTime.now().plusMonths(2);
         List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
-        assertEquals(countries.size(), 250);
+        assertEquals(250,countries.size());
         assertFalse(countries.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
         countryRepository.save(countries);
-        assertEquals(countryRepository.count(), 250);
+        assertEquals(250,countryRepository.count());
         List<Country> countries2 = IteratorUtils.toList(countryRepository.findAll().iterator());
         assertFalse(countries2.parallelStream().anyMatch(f -> f.getCountryName().isEmpty()));
         User persUser = new User("xwcwx", "sdd", "dqd", "dsqd", "9899", "dfsdf", countries2.get(1), endDate);
