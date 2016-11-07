@@ -2,7 +2,6 @@ package be.dragoncave;
 
 import be.dragoncave.domain.*;
 import be.dragoncave.persistance.CountryRepository;
-import be.dragoncave.persistance.UserRepository;
 import be.dragoncave.service.TaskService;
 import be.dragoncave.service.UserService;
 import be.dragoncave.util.CountryConverter;
@@ -10,10 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Profile;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,11 +16,6 @@ import java.util.List;
 @SpringBootApplication()
 //@Profile("prod")
 public class ToDoApplication implements CommandLineRunner {
-
-    public static void main(String[] args) {
-        SpringApplication.run(ToDoApplication.class, args);
-
-    }
 
     @Autowired
     private TaskService taskService;
@@ -39,8 +29,12 @@ public class ToDoApplication implements CommandLineRunner {
 
     private CountryRepository countryRepository;
 
+    public static void main(String[] args) {
+        SpringApplication.run(ToDoApplication.class, args);
 
-    @Bean()
+    }
+
+    // @Bean()
     public CommandLineRunner loadData() {
         List<Country> countries = countryConverter.parse("src/main/resources/countries.xml");
 
@@ -62,6 +56,6 @@ public class ToDoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-       // load();
+        // load();
     }
 }

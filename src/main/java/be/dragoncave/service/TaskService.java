@@ -17,4 +17,6 @@ public interface TaskService {
     Task save(Task task);
 
     void delete(Task selected);
+
+    void deleteAll();
 }

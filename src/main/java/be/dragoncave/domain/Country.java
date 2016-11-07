@@ -1,13 +1,7 @@
 package be.dragoncave.domain;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-import com.thoughtworks.xstream.annotations.XStreamInclude;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by benoit on 02/11/2016.
@@ -17,15 +11,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Country {
 
 
-    public Country() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column(unique = false, updatable = false, nullable = false)
     @NotNull
     private String countryName;
+    public Country() {
+    }
 
     public Country(String countryName) {
         this.countryName = countryName;

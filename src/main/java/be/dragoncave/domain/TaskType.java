@@ -12,11 +12,11 @@ public enum TaskType {
 
     private int taskType;
 
-    TaskType(int status){
-        status=status;
+    TaskType(int status) {
+        status = status;
     }
 
-    public static EnumSet<TaskType> getTaskTypes(){
+    public static EnumSet<TaskType> getTaskTypes() {
         return EnumSet.allOf(TaskType.class);
     }
 }

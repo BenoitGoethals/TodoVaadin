@@ -13,40 +13,13 @@ import java.util.List;
 
 public class User {
 
-    public User(String name, String forName, String userID, String street, String zip, String city, Country country, LocalDateTime birthDate) {
-        this.name = name;
-        this.forName = forName;
-        this.userID = userID;
-        this.street = street;
-        this.zip = zip;
-        this.city = city;
-        this.country = country;
-        this.birthDate = birthDate;
-        tasks = new ArrayList<Task>();
-    }
-
-
-    public User() {
-
-    }
-
     @OneToMany(mappedBy = "user", targetEntity = Task.class,
             fetch = FetchType.EAGER)
     private List<Task> tasks;
-
-    public List<Task> getTasks() {
-        return tasks;
-    }
-
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private int id;
-
     @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String name;
@@ -65,13 +38,34 @@ public class User {
     @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private String city;
-
     @ManyToOne(optional = false)
 
     private Country country;
     @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private LocalDateTime birthDate;
+    public User(String name, String forName, String userID, String street, String zip, String city, Country country, LocalDateTime birthDate) {
+        this.name = name;
+        this.forName = forName;
+        this.userID = userID;
+        this.street = street;
+        this.zip = zip;
+        this.city = city;
+        this.country = country;
+        this.birthDate = birthDate;
+        tasks = new ArrayList<Task>();
+    }
+    public User() {
+
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     public int getId() {
         return id;

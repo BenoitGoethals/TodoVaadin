@@ -20,8 +20,8 @@ public class MailUtilImpl implements MailUtil {
     }
 
 
-   @Override
-   public SimpleMailMessage send(String dest, String subject, String body) {
+    @Override
+    public SimpleMailMessage send(String dest, String subject, String body) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(dest);
         mailMessage.setReplyTo("someone@localhost");

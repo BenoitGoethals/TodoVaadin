@@ -4,7 +4,6 @@ import be.dragoncave.domain.Country;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.xstream.XStreamMarshaller;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by benoit on 02/11/2016.

@@ -17,13 +17,14 @@ import com.vaadin.ui.*;
  * Created by benoit on 05/11/2016.
  */
 
-public class TaskForm extends Window {
+public class TaskEditForm extends Window {
 
 
     private Grid grid;
 
-    public TaskForm(Grid grid) {
-        super("Add Task"); // Set window caption
+    public TaskEditForm(Grid grid) {
+        super("Edit Task"); // Set window caption
+        Task selected = (Task) ((Grid.SingleSelectionModel) grid.getSelectionModel()).getSelectedRow();
         center();
         FormLayout form = new FormLayout();
         form.setWidth("400px");
@@ -34,6 +35,7 @@ public class TaskForm extends Window {
         tf1.setWidth(15, Unit.PICAS);
         tf1.setRequired(true);
         tf1.addValidator(new NullValidator("Must be given", false));
+        tf1.setValue(selected.getDescription());
         form.addComponent(tf1);
         this.grid = grid;
 
@@ -43,6 +45,7 @@ public class TaskForm extends Window {
         comboboxStatus.setIcon(FontAwesome.USER);
         comboboxStatus.setRequired(true);
         comboboxStatus.addValidator(new NullValidator("Must be given", false));
+        comboboxStatus.setValue(selected.getTaskStatus());
 
 
         ComboBox comboboxTypes = new ComboBox("Task Type");
@@ -51,6 +54,7 @@ public class TaskForm extends Window {
 
         comboboxTypes.setRequired(true);
         comboboxTypes.addValidator(new NullValidator("Must be given", false));
+        comboboxTypes.setValue(selected.getTaskType());
 
         DateField dateFieldSt = new DateField("Start date");
         dateFieldSt.setResolution(Resolution.MINUTE);
@@ -58,7 +62,7 @@ public class TaskForm extends Window {
 
         dateFieldSt.setRequired(true);
         dateFieldSt.addValidator(new NullValidator("Must be given", false));
-
+        dateFieldSt.setValue(DateUtils.asDate(selected.getStartDate()));
 
         DateField dateFieldEnd = new DateField("End date");
         dateFieldEnd.setResolution(Resolution.MINUTE);
@@ -66,6 +70,7 @@ public class TaskForm extends Window {
 
         dateFieldEnd.setRequired(true);
         dateFieldEnd.addValidator(new NullValidator("Must be given", false));
+        dateFieldEnd.setValue(DateUtils.asDate(selected.getEndDate()));
 
         ComboBox comboboxUsers = new ComboBox("USER");
         comboboxUsers.setWidth(10, Unit.PICAS);
@@ -75,6 +80,7 @@ public class TaskForm extends Window {
 
         comboboxUsers.setRequired(true);
         comboboxUsers.addValidator(new NullValidator("Must be given", false));
+        comboboxUsers.setValue(selected.getUser());
 
 
         form.addComponent(comboboxStatus);

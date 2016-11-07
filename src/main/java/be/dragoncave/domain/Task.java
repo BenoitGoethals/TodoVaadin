@@ -1,9 +1,6 @@
 package be.dragoncave.domain;
 
 
-import org.hibernate.annotations.ManyToAny;
-import org.hibernate.annotations.NaturalId;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -13,18 +10,6 @@ import java.time.LocalDateTime;
 @Entity
 public class Task {
 
-    public Task(String description, LocalDateTime startDate, LocalDateTime endDate, TaskType taskType, TaskStatus taskStatus) {
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.taskType = taskType;
-        this.taskStatus = taskStatus;
-        this.nbrTask = String.valueOf(startDate.hashCode() + endDate.hashCode());
-    }
-
-    public Task() {
-
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -46,11 +31,22 @@ public class Task {
     @Enumerated(EnumType.ORDINAL)
     @Column(unique = false)
     private TaskStatus taskStatus;
-
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID", insertable = true, unique = false)
     private User user;
+    public Task(String description, LocalDateTime startDate, LocalDateTime endDate, TaskType taskType, TaskStatus taskStatus) {
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.taskType = taskType;
+        this.taskStatus = taskStatus;
+        this.nbrTask = String.valueOf(startDate.hashCode() + endDate.hashCode());
+    }
+
+
+    public Task() {
+
+    }
 
     public User getUser() {
         return user;
@@ -79,6 +75,7 @@ public class Task {
     public void setNbrTask() {
         this.nbrTask = String.valueOf(startDate.hashCode() + endDate.hashCode());
     }
+
     public String getDescription() {
         return description;
     }

@@ -13,11 +13,11 @@ public enum TaskStatus {
 
     private int status;
 
-    TaskStatus(int status){
-        status=status;
+    TaskStatus(int status) {
+        status = status;
     }
 
-    public static EnumSet<TaskStatus> getTaskStatuses(){
+    public static EnumSet<TaskStatus> getTaskStatuses() {
         return EnumSet.allOf(TaskStatus.class);
     }
 }

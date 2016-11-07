@@ -1,7 +1,6 @@
 package be.dragoncave.persistance;
 
 import be.dragoncave.domain.Country;
-import be.dragoncave.domain.Task;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;

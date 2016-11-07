@@ -45,13 +45,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task save(Task task) {
-       Task task1= taskReprository.save(task);
-        logger.info("Saved task :"+task1);
+        Task task1 = taskReprository.save(task);
+        logger.info("Saved task :" + task1);
         return task1;
     }
 
     @Override
     public void delete(Task selected) {
-         taskReprository.delete(selected);
+        taskReprository.delete(selected);
+    }
+
+    @Override
+    public void deleteAll() {
+        taskReprository.deleteAll();
     }
 }

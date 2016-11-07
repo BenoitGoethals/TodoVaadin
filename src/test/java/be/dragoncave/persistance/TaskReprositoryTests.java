@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.Rollback;
@@ -32,8 +33,9 @@ import static org.junit.Assert.assertNotNull;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes =SpecificTestConfig.class)
-
+//@ContextConfiguration(classes =SpecificTestConfig.class)
+@SpringBootTest
+//@DataJpaTest(showSql = true)
 @ActiveProfiles({"test-profile"})
 //@Transactional( propagation = Propagation.REQUIRED)
 public class TaskReprositoryTests {
@@ -55,7 +57,7 @@ public class TaskReprositoryTests {
     @Test
     @Rollback(value = true)
     public void saveTask() throws Exception {
-       countryRepository.deleteAll();
+     countryRepository.deleteAll();
         LocalDateTime timePoint = LocalDateTime.now();     // The current date and time
 
         LocalDateTime endDate = LocalDateTime.now().plusMonths(2);

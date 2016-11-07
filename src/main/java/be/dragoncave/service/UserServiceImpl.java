@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TaskServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User user(String userId) {
 
-        User user= userRepository.findByUserID(userId);
-        logger.info("Saved user"+user);
+        User user = userRepository.findByUserID(userId);
+        logger.info("Saved user" + user);
         return user;
     }
 
@@ -46,6 +46,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        logger.info("save : " + user);
         return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteAll() {
+
+        userRepository.deleteAll();
     }
 }
