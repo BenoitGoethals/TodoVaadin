@@ -14,10 +14,13 @@ import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import javafx.scene.layout.Pane;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,6 +30,8 @@ public class LoginWindow extends Window{
     private final TextField username;
     private final PasswordField passwordField;
 
+
+
     public TextField getUsername() {
         return username;
     }
@@ -35,7 +40,7 @@ public class LoginWindow extends Window{
         return passwordField;
     }
 
-    public LoginWindow() {
+    public LoginWindow(AuthenticationManager authenticationManager) {
         super("Login");
         center();
         FormLayout form = new FormLayout();
@@ -75,10 +80,15 @@ public class LoginWindow extends Window{
 
 
 
+
                 UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username.getValue(), passwordField.getValue());
 
+                SecurityContextImpl secureContext = new SecurityContextImpl();
+                authenticationManager.authenticate(authRequest);
+                secureContext.setAuthentication(authRequest);
+                SecurityContextHolder.setContext(secureContext);
+              //  SecurityContextHolder.getContext().setAuthentication(authRequest);
 
-                SecurityContextHolder.getContext().setAuthentication(authRequest);
                 if(SecurityContextHolder.getContext().getAuthentication().isAuthenticated()){
                     System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
                     close();

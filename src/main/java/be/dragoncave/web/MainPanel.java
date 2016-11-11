@@ -21,6 +21,8 @@ import com.vaadin.ui.components.calendar.event.BasicEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.authentication.AuthenticationManager;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
@@ -34,6 +36,10 @@ import java.util.List;
 @SpringUI
 @Theme("valo")
 public class MainPanel extends UI {
+
+    @Autowired()
+    @Qualifier("myAuthenticationManager")
+    private AuthenticationManager authenticationManager;
 
 
     private static final Logger logger = LoggerFactory.getLogger(TaskServiceImpl.class);
@@ -154,7 +160,7 @@ public class MainPanel extends UI {
         Button buttonLoginForl=new Button("Login");
         horizontalLayout.addComponent(buttonLoginForl);
         buttonLoginForl.addClickListener(event -> {
-            LoginWindow loginView=new LoginWindow();
+            LoginWindow loginView=new LoginWindow(authenticationManager);
             loginView.setEnabled(true);
 
             UI.getCurrent().addWindow(loginView);

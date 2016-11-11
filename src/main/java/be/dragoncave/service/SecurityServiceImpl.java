@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * Created by benoit on 11/11/2016.
  */@Service
-class SecurityServiceImpl implements SecurityService {
+public class SecurityServiceImpl implements SecurityService {
 
      @Autowired
      private UserDetailRepository UserDetailRepository;
@@ -74,6 +74,7 @@ class SecurityServiceImpl implements SecurityService {
             throws UsernameNotFoundException {
 
         UserDetail userDetail= UserDetailRepository.findByUserName(username);
+        if(userDetail==null) throw new UsernameNotFoundException(username);
         Set<Role> roles=new HashSet<>();
         roles.add(userDetail.getRole());
         List<GrantedAuthority> authorities =
