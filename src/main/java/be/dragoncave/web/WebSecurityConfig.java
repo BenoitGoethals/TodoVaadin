@@ -53,6 +53,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser("user").password("password").roles("USER");
     }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable();
+    }
 
-    //https://github.com/markoradinovic/Vaadin4Spring-MVP-Sample-SpringSecurity
+
+//https://github.com/markoradinovic/Vaadin4Spring-MVP-Sample-SpringSecurity
 }

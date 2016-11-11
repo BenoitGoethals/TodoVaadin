@@ -30,6 +30,11 @@
             <name>Gemfire Repository</name>
             <url>http://dist.gemstone.com/maven/release</url>
         </repository>
+
+        <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -69,6 +74,7 @@
             <artifactId>vaadin-spring-boot-starter</artifactId>
             <version>1.0.2</version>
         </dependency>
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -109,11 +115,18 @@
             <artifactId>spring-test</artifactId>
             <version>4.3.3.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>loginform</artifactId>
+            <version>0.6.2</version>
+        </dependency>
+
 
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
+
             <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>

@@ -2,6 +2,7 @@ package be.dragoncave.util;
 
 import be.dragoncave.domain.Country;
 import com.thoughtworks.xstream.XStream;
+import com.vaadin.spring.annotation.SpringComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.oxm.xstream.XStreamMarshaller;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by benoit on 02/11/2016.
  */
-@Component("CountryConverter")
+@SpringComponent("CountryConverter")
 public class CountryConverterImpl implements CountryConverter {
 
     @Autowired

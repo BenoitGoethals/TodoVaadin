@@ -1,5 +1,6 @@
 package be.dragoncave.util;
 
+import com.vaadin.spring.annotation.SpringComponent;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by benoit on 04/11/2016.
  */
-@Component
+@SpringComponent
 public class AppConfiguration implements ApplicationContextAware {
 
     private static ApplicationContext context;

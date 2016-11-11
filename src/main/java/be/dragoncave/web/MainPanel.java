@@ -2,10 +2,12 @@ package be.dragoncave.web;
 
 import be.dragoncave.domain.*;
 import be.dragoncave.persistance.CountryRepository;
+import be.dragoncave.service.SecurityService;
 import be.dragoncave.service.TaskService;
 import be.dragoncave.service.TaskServiceImpl;
 import be.dragoncave.service.UserService;
 import be.dragoncave.util.CountryConverter;
+import com.vaadin.annotations.Theme;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -30,6 +32,7 @@ import java.util.List;
  * Created by benoit on 03/11/2016.
  */
 @SpringUI
+@Theme("valo")
 public class MainPanel extends UI {
 
 
@@ -42,7 +45,12 @@ public class MainPanel extends UI {
     @Autowired
 
     private UserService userService;
+
+@Autowired
+    private SecurityService securityService;
+
     @Autowired
+
 
     private CountryRepository countryRepository;
     private Task task = new Task();
@@ -58,9 +66,28 @@ public class MainPanel extends UI {
         taskService.deleteAll();
         userService.deleteAll();
 
-
         countryRepository.deleteAll();
         countryRepository.save(countries);
+
+
+        Role role=new Role("admin");
+
+
+
+        Role role1=new Role("user");
+
+        Role role2= securityService.addRole(role);
+        securityService.addRole(role1);
+
+        UserDetail user=new UserDetail("benoit","ranger14",true);
+        User persUsers = new User("benoit" , "sddssddsq" , "dqd" , "dsqssd", "9899", "dfsdf", countryRepository.findOne(1), LocalDateTime.now().minusYears(50));
+
+        user.setRole(role2);
+
+
+        persUsers.setUserDetail(securityService.addUserDetail(user));
+        userService.save(persUsers);
+
         List<Country> countriesArray = (List<Country>) countryRepository.findAll();
         System.out.println(countryRepository.count());
 
@@ -122,6 +149,19 @@ public class MainPanel extends UI {
         Button editButton = new Button("Edit Button");
         editButton.setEnabled(false);
         horizontalLayout.addComponent(editButton);
+
+
+        Button buttonLoginForl=new Button("Login");
+        horizontalLayout.addComponent(buttonLoginForl);
+        buttonLoginForl.addClickListener(event -> {
+            LoginWindow loginView=new LoginWindow();
+            loginView.setEnabled(true);
+
+            UI.getCurrent().addWindow(loginView);
+
+            });
+
+
 
         deleteButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {

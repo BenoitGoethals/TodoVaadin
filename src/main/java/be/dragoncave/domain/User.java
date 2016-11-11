@@ -44,6 +44,10 @@ public class User {
     @Column(unique = false, updatable = true, nullable = false)
     @NotNull
     private LocalDateTime birthDate;
+
+    @OneToOne
+    private UserDetail userDetail;
+
     public User(String name, String forName, String userID, String street, String zip, String city, Country country, LocalDateTime birthDate) {
         this.name = name;
         this.forName = forName;
@@ -139,6 +143,15 @@ public class User {
         this.birthDate = birthDate;
 
 
+    }
+
+
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     @Override

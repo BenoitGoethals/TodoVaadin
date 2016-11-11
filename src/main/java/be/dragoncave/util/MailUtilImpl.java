@@ -1,5 +1,6 @@
 package be.dragoncave.util;
 
+import com.vaadin.spring.annotation.SpringComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Created by benoi on 3/11/2016.
  */
 
-@Component
+@SpringComponent
 public class MailUtilImpl implements MailUtil {
 
     private final JavaMailSender javaMailSender;

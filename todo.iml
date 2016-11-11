@@ -122,6 +122,7 @@
     <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-test:4.3.3.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.vaadin.addons:loginform:0.6.2" level="project" />
   </component>
   <component name="sonarModuleSettings">
     <option name="localAnalysisScripName" value="&lt;PROJECT&gt;" />
