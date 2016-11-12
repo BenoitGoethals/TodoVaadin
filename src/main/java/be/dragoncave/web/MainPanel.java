@@ -7,6 +7,7 @@ import be.dragoncave.service.TaskService;
 import be.dragoncave.service.TaskServiceImpl;
 import be.dragoncave.service.UserService;
 import be.dragoncave.util.CountryConverter;
+import be.dragoncave.util.SecurityUtil;
 import com.vaadin.annotations.Theme;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -76,11 +77,11 @@ public class MainPanel extends UI {
         countryRepository.save(countries);
 
 
-        Role role=new Role("admin");
+        Role role=new Role("ADMIN");
 
 
 
-        Role role1=new Role("user");
+        Role role1=new Role("USER");
 
         Role role2= securityService.addRole(role);
         securityService.addRole(role1);
@@ -140,6 +141,7 @@ public class MainPanel extends UI {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
         VerticalLayout verticalLayout = new VerticalLayout();
         Button addButton = new Button("Add Task");
+        addButton.setEnabled(SecurityUtil.hasRole("ADMIN"));
         horizontalLayout.addComponent(addButton);
 
         addButton.addClickListener(new Button.ClickListener() {

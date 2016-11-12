@@ -1,13 +1,23 @@
 package be.dragoncave.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by benoit on 11/11/2016.
  */
 @Entity
 public class Role {
+
+    static {
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -78,5 +88,16 @@ public class Role {
         userDetails.add(userDetail);
     }
 
+
+
+    public static List<GrantedAuthority> getRoles(){
+
+
+        List<GrantedAuthority> result = new ArrayList<GrantedAuthority>();
+        result.add(new SimpleGrantedAuthority("ADMIN"));
+        result.add(new SimpleGrantedAuthority("USER"));
+
+        return result;
+    }
 
 }

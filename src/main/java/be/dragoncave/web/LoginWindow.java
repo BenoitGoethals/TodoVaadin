@@ -1,6 +1,7 @@
 package be.dragoncave.web;
 
 
+import be.dragoncave.domain.Role;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -63,12 +64,12 @@ public class LoginWindow extends Window {
             public void buttonClick(Button.ClickEvent event) {
 
 
-                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username.getValue(), passwordField.getValue());
+                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username.getValue(), passwordField.getValue(), Role.getRoles());
 
                 SecurityContextImpl secureContext = new SecurityContextImpl();
                 try {
 
-                    authRequest.setAuthenticated(true);
+                    //authRequest.setAuthenticated(true);
                     authenticationManager.authenticate(authRequest);
 
                     secureContext.setAuthentication(authRequest);
