@@ -68,7 +68,7 @@ public class LoginWindow extends Window {
                 SecurityContextImpl secureContext = new SecurityContextImpl();
                 try {
 
-
+                    authRequest.setAuthenticated(true);
                     authenticationManager.authenticate(authRequest);
 
                     secureContext.setAuthentication(authRequest);
