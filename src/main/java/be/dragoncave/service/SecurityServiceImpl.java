@@ -4,12 +4,12 @@ import be.dragoncave.domain.Role;
 import be.dragoncave.domain.UserDetail;
 import be.dragoncave.persistance.RoleRepository;
 import be.dragoncave.persistance.UserDetailRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,10 @@ import java.util.Set;
  */@Service
 public class SecurityServiceImpl implements SecurityService {
 
-     @Autowired
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskServiceImpl.class);
+
+    @Autowired
      private UserDetailRepository UserDetailRepository;
 
     @Autowired
@@ -40,18 +43,20 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public UserDetail addUserDetail(UserDetail userDetail){
-        return null;
+        logger.info("save : "+userDetail);
+        return UserDetailRepository.save(userDetail);
     }
 
 
     @Override
     public void deleteUserDetail(UserDetail userDetail){
+        logger.info("delete : "+userDetail);
         UserDetailRepository.delete(userDetail);
     }
 
     @Override
     public Role addRole(Role role) {
-
+        logger.info("save : "+role);
       return   roleRepository.save(role);
     }
 
@@ -62,10 +67,14 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public void deleteRole(Role role) {
-
+        logger.info("delete : "+role);
         roleRepository.delete(role);
     }
 
+    @Override
+    public long countUserDetaisl() {
+        return UserDetailRepository.count();
+    }
 
 
     @Transactional(readOnly=true)
@@ -73,7 +82,7 @@ public class SecurityServiceImpl implements SecurityService {
     public User loadUserByUsername(final String username)
             throws UsernameNotFoundException {
 
-        UserDetail userDetail= UserDetailRepository.findByUserName(username);
+        UserDetail userDetail= UserDetailRepository.findByuserName(username);
         if(userDetail==null) throw new UsernameNotFoundException(username);
         Set<Role> roles=new HashSet<>();
         roles.add(userDetail.getRole());
@@ -87,7 +96,7 @@ public class SecurityServiceImpl implements SecurityService {
     // Converts com.mkyong.users.model.User user to
     // org.springframework.security.core.userdetails.User
     private User buildUserForAuthentication(UserDetail user, List<GrantedAuthority> authorities) {
-        return new User(user.getUsername(), user.getPassword(),
+        return new User(user.getUserName(), user.getPassword(),
                 user.isEnabled(), true, true, true, authorities);
     }
 

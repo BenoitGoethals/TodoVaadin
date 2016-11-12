@@ -12,7 +12,7 @@ public class UserDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USERDETAIL_ID")
     private int id;
-    private String username;
+    private String userName;
     private String password;
     private boolean enabled;
     @ManyToOne(optional = false)
@@ -33,12 +33,12 @@ public class UserDetail {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -74,8 +74,8 @@ public class UserDetail {
     }
 
 
-    public UserDetail(String username, String password, boolean enabled) {
-        this.username = username;
+    public UserDetail(String userName, String password, boolean enabled) {
+        this.userName = userName;
         this.password = password;
         this.enabled = enabled;
     }
@@ -87,7 +87,7 @@ public class UserDetail {
 
         UserDetail that = (UserDetail) o;
 
-        if (getUsername() != null ? !getUsername().equals(that.getUsername()) : that.getUsername() != null)
+        if (getUserName() != null ? !getUserName().equals(that.getUserName()) : that.getUserName() != null)
             return false;
         return getPassword() != null ? getPassword().equals(that.getPassword()) : that.getPassword() == null;
 
@@ -95,7 +95,7 @@ public class UserDetail {
 
     @Override
     public int hashCode() {
-        int result = getUsername() != null ? getUsername().hashCode() : 0;
+        int result = getUserName() != null ? getUserName().hashCode() : 0;
         result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
         return result;
     }
@@ -104,7 +104,7 @@ public class UserDetail {
     public String toString() {
         return "UserDetail{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 '}';

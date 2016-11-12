@@ -85,12 +85,15 @@ public class MainPanel extends UI {
         Role role2= securityService.addRole(role);
         securityService.addRole(role1);
 
+
         UserDetail user=new UserDetail("benoit","ranger14",true);
+        user.setRole(role2);
+        securityService.addUserDetail(user);
         User persUsers = new User("benoit" , "sddssddsq" , "dqd" , "dsqssd", "9899", "dfsdf", countryRepository.findOne(1), LocalDateTime.now().minusYears(50));
 
         user.setRole(role2);
 
-
+        System.out.println(securityService.countUserDetaisl());
         persUsers.setUserDetail(securityService.addUserDetail(user));
         userService.save(persUsers);
 
