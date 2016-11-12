@@ -23,4 +23,6 @@ public interface SecurityService extends UserDetailsService {
     void deleteRole(Role role);
 
     long countUserDetaisl();
+
+    void deleteAll();
 }

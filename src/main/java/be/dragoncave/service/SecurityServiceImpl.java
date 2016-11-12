@@ -28,7 +28,7 @@ public class SecurityServiceImpl implements SecurityService {
     private static final Logger logger = LoggerFactory.getLogger(TaskServiceImpl.class);
 
     @Autowired
-     private UserDetailRepository UserDetailRepository;
+     private UserDetailRepository userDetailRepository;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -37,21 +37,21 @@ public class SecurityServiceImpl implements SecurityService {
     @Override
     public UserDetail getUserDetail(String userName, String password){
         UserDetail userDetail=new UserDetail(userName,password,true);
-        UserDetail save = UserDetailRepository.save(userDetail);
+        UserDetail save = userDetailRepository.save(userDetail);
         return save;
     }
 
     @Override
     public UserDetail addUserDetail(UserDetail userDetail){
         logger.info("save : "+userDetail);
-        return UserDetailRepository.save(userDetail);
+        return userDetailRepository.save(userDetail);
     }
 
 
     @Override
     public void deleteUserDetail(UserDetail userDetail){
         logger.info("delete : "+userDetail);
-        UserDetailRepository.delete(userDetail);
+        userDetailRepository.delete(userDetail);
     }
 
     @Override
@@ -73,7 +73,13 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public long countUserDetaisl() {
-        return UserDetailRepository.count();
+        return userDetailRepository.count();
+    }
+
+    @Override
+    public void deleteAll() {
+        userDetailRepository.deleteAll();
+        roleRepository.deleteAll();
     }
 
 
@@ -82,7 +88,7 @@ public class SecurityServiceImpl implements SecurityService {
     public User loadUserByUsername(final String username)
             throws UsernameNotFoundException {
 
-        UserDetail userDetail= UserDetailRepository.findByuserName(username);
+        UserDetail userDetail= userDetailRepository.findByuserName(username);
         if(userDetail==null) throw new UsernameNotFoundException(username);
         Set<Role> roles=new HashSet<>();
         roles.add(userDetail.getRole());

@@ -77,6 +77,8 @@ public class LoginWindow extends Window {
                     //
 
                         System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+                    System.out.println(SecurityContextHolder.getContext().getAuthentication().getCredentials());
+                    System.out.println(SecurityContextHolder.getContext().getAuthentication().isAuthenticated());
                         close();
 
                 } catch (BadCredentialsException e) {

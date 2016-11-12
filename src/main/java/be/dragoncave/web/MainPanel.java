@@ -108,7 +108,7 @@ public class MainPanel extends UI {
             taskService.save(taskPers);
             System.out.print(taskPers.getId());
         }
-        System.out.println("hallo");
+
     }
 
     @Override
